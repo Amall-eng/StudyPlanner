@@ -24,3 +24,20 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --bg: #0b0f19;
+  --card: #1b2946;
+  --text: #e5e7eb;
+  --muted: #687996;
+  --border: #203553;
+  --accent: #a78bfa;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}

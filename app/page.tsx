@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { CalendarDays, BookOpen, ClipboardList, Clock3 } from 'lucide-react';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -490,25 +491,25 @@ export default function Home() {
         {/* Feature Cards */}
         <div className="features">
           <Link href="/plan" className="feature-card">
-            <div className="feature-icon">📅</div>
+            <div className="feature-icon"><CalendarDays size="1em" /></div>
             <h3 className="feature-title">Study Planner</h3>
             <p className="feature-desc">Organize your study schedule and stay on track with your goals</p>
           </Link>
 
           <Link href="/courses" className="feature-card">
-            <div className="feature-icon">📚</div>
+            <div className="feature-icon"><BookOpen size="1em" /></div>
             <h3 className="feature-title">Courses</h3>
             <p className="feature-desc">Browse and manage your enrolled courses in one place</p>
           </Link>
 
           <Link href="/assessments" className="feature-card">
-            <div className="feature-icon">📝</div>
+            <div className="feature-icon"><ClipboardList size="1em" /></div>
             <h3 className="feature-title">Assessments</h3>
             <p className="feature-desc">Track your assessments and test your knowledge</p>
           </Link>
 
           <Link href="/availability" className="feature-card">
-            <div className="feature-icon">⏰</div>
+            <div className="feature-icon"><Clock3 size="1em" /></div>
             <h3 className="feature-title">Availability</h3>
             <p className="feature-desc">Manage your available time slots for studying</p>
           </Link>

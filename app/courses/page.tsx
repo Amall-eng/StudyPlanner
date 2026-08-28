@@ -1,5 +1,6 @@
 "use client";
 
+import "../courses.css";
 import { useState, useEffect } from "react";
 
 type Course = {
@@ -17,7 +18,19 @@ export default function CoursesPage() {
 
   useEffect(() => {
     setMounted(true);
+    const savedCourses = localStorage.getItem("courses");
+
+  if (savedCourses) {
+    setCourses(JSON.parse(savedCourses));
+  }
+
   }, []);
+  
+  useEffect(() => {
+  if (mounted) {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  }
+}, [courses, mounted]);
 
   const addCourse = () => {
     if (name.trim() === "") return;

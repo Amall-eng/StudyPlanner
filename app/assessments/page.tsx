@@ -25,6 +25,15 @@ export default function AssessmentsPage() {
   const [type, setType] = useState("Assignment");
   const [deadline, setDeadline] = useState("");
 
+// bring in the courses from localStorage
+  useEffect(() => {
+  const savedCourses = localStorage.getItem("courses");
+
+  if (savedCourses) {//حوّل النص المخزن إلى بيانات JavaScript
+    setCourses(JSON.parse(savedCourses));
+  }
+}, []);// dependency array
+
    return (
     <main>
       <h1>My Assessments</h1>

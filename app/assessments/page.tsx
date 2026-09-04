@@ -37,6 +37,28 @@ export default function AssessmentsPage() {
    return (
     <main>
       <h1>My Assessments</h1>
+      <label>
+        Course:
+        <select value={courseId}
+         onChange={(e) => setCourseId(e.target.value)}>
+         
+          <option value="">Select a course</option>
+          
+          {courses.map((course) => (
+            <option key={course.id} value={course.id}>
+              {course.name}
+            </option>
+          ))}
+         </select>
+         <label>Assessment Name</label>
+
+         <input
+           type="text"
+           placeholder="e.g., Homework 2, Midterm Chapter 3"
+           value={name}
+           onChange={(e) => setName(e.target.value)}
+         />
+      </label>
     </main>
   );
 }

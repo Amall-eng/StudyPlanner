@@ -248,6 +248,72 @@
   border-color: rgba(239, 68, 68, 0.6);
 }
 
+.assessment-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.completion-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.completion-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #34d399;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkbox-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.completion-checkbox:hover .checkbox-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.completion-checkbox input[type="checkbox"]:checked + .checkbox-label {
+  color: #34d399;
+  font-weight: 500;
+}
+
+.assessment-card.completed {
+  opacity: 0.7;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.assessment-card.completed:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.assessment-name.completed {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.assessment-card.completed .assessment-course span {
+  color: rgba(240, 147, 251, 0.6);
+}
+
+.assessment-card.completed .assessment-type {
+  opacity: 0.6;
+}
+
+.assessment-card.completed .assessment-deadline {
+  color: rgba(255, 255, 255, 0.4);
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -273,6 +339,7 @@
   .form-row { grid-template-columns: 1fr; }
   .assessment-header { flex-direction: column; align-items: flex-start; }
   .assessment-meta { flex-direction: column; gap: 0.5rem; }
+  .assessment-actions { flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 480px) {

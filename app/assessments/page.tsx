@@ -15,6 +15,7 @@ type Assessment = {
   courseId: string;
   type: "Assignment" | "Quiz" | "Midterm" | "Final Exam" | "Project";
   deadline: string;
+  completed: boolean;
 };
 
 export default function AssessmentsPage() {
@@ -41,9 +42,14 @@ export default function AssessmentsPage() {
     const savedAssessments = localStorage.getItem("assessments");
     if (savedAssessments) {
       const parsed = JSON.parse(savedAssessments);
+      // Backward compatibility: treat missing completed as false
+      const normalized = parsed.map((a: Assessment) => ({
+        ...a,
+        completed: a.completed ?? false,
+      }));
       // Sort by nearest deadline first
-      parsed.sort((a: Assessment, b: Assessment) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
-      setAssessments(parsed);
+      normalized.sort((a: Assessment, b: Assessment) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
+      setAssessments(normalized);
     }
   }, []);
 
@@ -72,6 +78,7 @@ export default function AssessmentsPage() {
       name: name.trim(),
       type,
       deadline,
+      completed: false,
     };
 
     // Add and sort by nearest deadline first
@@ -90,6 +97,12 @@ export default function AssessmentsPage() {
 
   const deleteAssessment = (id: string) => {
     setAssessments((prev) => prev.filter((a) => a.id !== id));
+  };
+
+  const toggleCompleted = (id: string) => {
+    setAssessments((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, completed: !a.completed } : a))
+    );
   };
 
   const isOverdue = (dateStr: string) => {
@@ -185,13 +198,18 @@ export default function AssessmentsPage() {
             </div>
           ) : (
             assessments.map((assessment) => (
-              <div key={assessment.id} className="assessment-card">
+              <div
+                key={assessment.id}
+                className={`assessment-card ${assessment.completed ? "completed" : ""}`}
+              >
                 <div className="assessment-header">
                   <div className="assessment-main">
                     <div className="assessment-course">
                       Course: <span>{getCourseName(assessment.courseId)}</span>
                     </div>
-                    <div className="assessment-name">{assessment.name}</div>
+                    <div className={`assessment-name ${assessment.completed ? "completed" : ""}`}>
+                      {assessment.name}
+                    </div>
                   </div>
                   <span className={`assessment-type type-${assessment.type.toLowerCase().replace(" ", "-")}`}>
                     {assessment.type}
@@ -203,12 +221,24 @@ export default function AssessmentsPage() {
                     {isOverdue(assessment.deadline) && " (OVERDUE)"}
                   </span>
                 </div>
-                <button
-                  className="delete-btn"
-                  onClick={() => deleteAssessment(assessment.id)}
-                >
-                  Remove
-                </button>
+                <div className="assessment-actions">
+                  <label className="completion-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={assessment.completed}
+                      onChange={() => toggleCompleted(assessment.id)}
+                    />
+                    <span className="checkbox-label">
+                      {assessment.completed ? "Completed" : "Not Completed"}
+                    </span>
+                  </label>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteAssessment(assessment.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             ))
           )}

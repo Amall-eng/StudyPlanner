@@ -27,15 +27,12 @@ export default function Navbar() {
             Assessments
           </Link>
 
-          <Link href="/availability" className={linkClass("/availability")}>
-            Availability
-          </Link>
-
-          <Link href="/plan" className={linkClass("/plan")}>
-            Plan
+          <Link href="/dashboard" className={linkClass("/dashboard")}>
+            Dashboard
           </Link>
         </div>
       </nav>
     </header>
   );
 }
+      

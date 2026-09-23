@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { CalendarDays, BookOpen, ClipboardList, Clock3 } from 'lucide-react';
+import { BookOpen, ClipboardList, LayoutDashboard } from 'lucide-react';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -476,45 +476,37 @@ export default function Home() {
       <div className="hero-section">
         <h1 className="title">StudyPlanar</h1>
         <p className="subtitle">
-          Plan your studies, track your progress, and achieve your goals
+          Organize your courses, track deadlines, and monitor your academic progress.
         </p>
 
         <div className="cta-buttons">
-          <Link href="/plan" className="cta-primary">
+          <Link href="/courses" className="cta-primary">
             Get Started
           </Link>
-          <Link href="/courses" className="cta-secondary">
-            Explore Courses
+          <Link href="/dashboard" className="cta-secondary">
+            View Dashboard
           </Link>
         </div>
 
-        {/* Feature Cards */}
+{/* Feature Cards */}
         <div className="features">
-          <Link href="/plan" className="feature-card">
-            <div className="feature-icon"><CalendarDays size="1em" /></div>
-            <h3 className="feature-title">Study Planner</h3>
-            <p className="feature-desc">Organize your study schedule and stay on track with your goals</p>
-          </Link>
-
           <Link href="/courses" className="feature-card">
             <div className="feature-icon"><BookOpen size="1em" /></div>
             <h3 className="feature-title">Courses</h3>
-            <p className="feature-desc">Browse and manage your enrolled courses in one place</p>
+            <p className="feature-desc">Add and manage your courses and difficulty levels.</p>
           </Link>
 
           <Link href="/assessments" className="feature-card">
             <div className="feature-icon"><ClipboardList size="1em" /></div>
             <h3 className="feature-title">Assessments</h3>
-            <p className="feature-desc">Track your assessments and test your knowledge</p>
+            <p className="feature-desc">Track assignments, quizzes, exams, and deadlines.</p>
           </Link>
 
           <Link href="/dashboard" className="feature-card">
-            <div className="feature-icon"><Clock3 size="1em" /></div>
+            <div className="feature-icon"><LayoutDashboard size="1em" /></div>
             <h3 className="feature-title">Dashboard</h3>
-            <p className="feature-desc">Get an overview of your study progress and performance</p>
+            <p className="feature-desc">View your progress, upcoming deadlines, and calendar.</p>
           </Link>
-
-        
         </div>
       </div>
     </div>

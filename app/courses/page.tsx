@@ -1,6 +1,6 @@
 "use client";
 
-import "../courses.css";
+import "./courses.css";
 import { useState, useEffect } from "react";
 
 type Course = {
@@ -9,12 +9,22 @@ type Course = {
   difficulty: number; // 1..5
 };
 
+type Assessment = {
+  id: string;
+  name: string;
+  courseId: string;
+  type: "Assignment" | "Quiz" | "Midterm" | "Final Exam" | "Project";
+  deadline: string;
+  completed: boolean;
+};
+
 export default function CoursesPage() {
   const [mounted, setMounted] = useState(false);
   const [name, setName] = useState("");
   const [difficulty, setDifficulty] = useState<number>(4);
   const [courses, setCourses] = useState<Course[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -58,8 +68,34 @@ export default function CoursesPage() {
     setError(null);
   };
 
-  const deleteCourse = (id: string) => {
-    setCourses(courses.filter((course) => course.id !== id));
+  const requestDeleteCourse = (id: string) => {
+    const course = courses.find((c) => c.id === id);
+    if (course) {
+      setConfirmDelete({ id: course.id, name: course.name });
+    }
+  };
+
+  const cancelDelete = () => {
+    setConfirmDelete(null);
+  };
+
+  const confirmDeleteCourse = () => {
+    if (!confirmDelete) return;
+
+    const deletedId = confirmDelete.id;
+
+    // Remove the course from courses state
+    setCourses(courses.filter((course) => course.id !== deletedId));
+
+    // Remove associated assessments from localStorage
+    const savedAssessments = localStorage.getItem("assessments");
+    if (savedAssessments) {
+      const parsed: Assessment[] = JSON.parse(savedAssessments);
+      const filtered = parsed.filter((a) => a.courseId !== deletedId);
+      localStorage.setItem("assessments", JSON.stringify(filtered));
+    }
+
+    setConfirmDelete(null);
   };
 
   return (
@@ -153,7 +189,7 @@ export default function CoursesPage() {
                 </div>
                 <button
                   className="delete-btn"
-                  onClick={() => deleteCourse(course.id)}
+                  onClick={() => requestDeleteCourse(course.id)}
                 >
                   Remove
                 </button>
@@ -162,6 +198,27 @@ export default function CoursesPage() {
           )}
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      {confirmDelete && (
+        <div className="delete-modal-overlay" onClick={cancelDelete}>
+          <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="delete-modal-icon">⚠️</div>
+            <h3 className="delete-modal-title">Delete {confirmDelete.name}?</h3>
+            <p className="delete-modal-message">
+              This will also delete all assessments associated with this course.
+            </p>
+            <div className="delete-modal-actions">
+              <button className="delete-modal-cancel" onClick={cancelDelete}>
+                Cancel
+              </button>
+              <button className="delete-modal-confirm" onClick={confirmDeleteCourse}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -508,11 +508,13 @@ export default function Home() {
             <p className="feature-desc">Track your assessments and test your knowledge</p>
           </Link>
 
-          <Link href="/availability" className="feature-card">
+          <Link href="/dashboard" className="feature-card">
             <div className="feature-icon"><Clock3 size="1em" /></div>
-            <h3 className="feature-title">Availability</h3>
-            <p className="feature-desc">Manage your available time slots for studying</p>
+            <h3 className="feature-title">Dashboard</h3>
+            <p className="feature-desc">Get an overview of your study progress and performance</p>
           </Link>
+
+        
         </div>
       </div>
     </div>

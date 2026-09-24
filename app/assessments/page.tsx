@@ -2,6 +2,7 @@
 
 import "./assessments.css";
 import { useState, useEffect } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type Course = {
   id: string;
@@ -119,6 +120,21 @@ export default function AssessmentsPage() {
 
   return (
     <div className="assessments-container">
+
+      {/* Page Navigation - Top */}
+      <div className="page-nav-container">
+        <nav className="page-nav page-nav-top" aria-label="Page navigation">
+          <a href="/courses" className="page-nav-link page-nav-prev">
+            <ArrowLeft className="page-nav-icon" aria-hidden="true" />
+            <span>Courses</span>
+          </a>
+          <a href="/dashboard" className="page-nav-link page-nav-next">
+            <span>Dashboard</span>
+            <ArrowRight className="page-nav-icon" aria-hidden="true" />
+          </a>
+        </nav>
+      </div>
+
       <div className="page-header">
         <h1 className="page-title">My Assessments</h1>
         <p className="page-subtitle">Track assignments, quizzes, and exams</p>

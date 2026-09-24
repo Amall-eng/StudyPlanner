@@ -2,6 +2,7 @@
 
 import "./courses.css";
 import { useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 
 type Course = {
   id: string;
@@ -126,6 +127,16 @@ export default function CoursesPage() {
         <div className="mini-diamond"></div>
       </div>
 
+      {/* Page Navigation - Top */}
+      <div className="page-nav-container">
+        <nav className="page-nav page-nav-top" aria-label="Page navigation">
+          <a href="/assessments" className="page-nav-link page-nav-next">
+            <span>Assessments</span>
+            <ArrowRight className="page-nav-icon" aria-hidden="true" />
+          </a>
+        </nav>
+      </div>
+
       {/* Page Content */}
       <div className="page-header">
         <h1 className="page-title">My Courses</h1>
@@ -194,9 +205,10 @@ export default function CoursesPage() {
                   Remove
                 </button>
               </div>
-            ))
-          )}
+))
+        )}
         </div>
+
       </div>
 
       {/* Confirmation Modal */}

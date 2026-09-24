@@ -2,6 +2,7 @@
 
 import "./dashboard.css";
 import { useState, useEffect, useMemo } from "react";
+import { ArrowLeft } from "lucide-react";
 
 type Course = {
   id: string;
@@ -250,6 +251,17 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-container">
+
+      {/* Page Navigation - Top */}
+      <div className="page-nav-container">
+        <nav className="page-nav page-nav-top" aria-label="Page navigation">
+          <a href="/assessments" className="page-nav-link page-nav-prev">
+            <ArrowLeft className="page-nav-icon" aria-hidden="true" />
+            <span>Assessments</span>
+          </a>
+        </nav>
+      </div>
+
       <div className="dashboard-header">
         <h1 className="dashboard-title">Dashboard</h1>
         <p className="dashboard-subtitle">Your study progress at a glance</p>

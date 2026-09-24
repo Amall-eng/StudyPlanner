@@ -1,11 +1,22 @@
 "use client";
 
+import "./courses.css";
 import { useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 
 type Course = {
   id: string;
   name: string;
   difficulty: number; // 1..5
+};
+
+type Assessment = {
+  id: string;
+  name: string;
+  courseId: string;
+  type: "Assignment" | "Quiz" | "Midterm" | "Final Exam" | "Project";
+  deadline: string;
+  completed: boolean;
 };
 
 export default function CoursesPage() {
@@ -14,10 +25,23 @@ export default function CoursesPage() {
   const [difficulty, setDifficulty] = useState<number>(4);
   const [courses, setCourses] = useState<Course[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    const savedCourses = localStorage.getItem("courses");
+
+  if (savedCourses) {
+    setCourses(JSON.parse(savedCourses));
+  }
+
   }, []);
+  
+  useEffect(() => {
+  if (mounted) {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  }
+}, [courses, mounted]);
 
   const addCourse = () => {
     if (name.trim() === "") return;
@@ -45,8 +69,34 @@ export default function CoursesPage() {
     setError(null);
   };
 
-  const deleteCourse = (id: string) => {
-    setCourses(courses.filter((course) => course.id !== id));
+  const requestDeleteCourse = (id: string) => {
+    const course = courses.find((c) => c.id === id);
+    if (course) {
+      setConfirmDelete({ id: course.id, name: course.name });
+    }
+  };
+
+  const cancelDelete = () => {
+    setConfirmDelete(null);
+  };
+
+  const confirmDeleteCourse = () => {
+    if (!confirmDelete) return;
+
+    const deletedId = confirmDelete.id;
+
+    // Remove the course from courses state
+    setCourses(courses.filter((course) => course.id !== deletedId));
+
+    // Remove associated assessments from localStorage
+    const savedAssessments = localStorage.getItem("assessments");
+    if (savedAssessments) {
+      const parsed: Assessment[] = JSON.parse(savedAssessments);
+      const filtered = parsed.filter((a) => a.courseId !== deletedId);
+      localStorage.setItem("assessments", JSON.stringify(filtered));
+    }
+
+    setConfirmDelete(null);
   };
 
   return (
@@ -75,6 +125,16 @@ export default function CoursesPage() {
 
       <div className="shape shape-4">
         <div className="mini-diamond"></div>
+      </div>
+
+      {/* Page Navigation - Top */}
+      <div className="page-nav-container">
+        <nav className="page-nav page-nav-top" aria-label="Page navigation">
+          <a href="/assessments" className="page-nav-link page-nav-next">
+            <span>Assessments</span>
+            <ArrowRight className="page-nav-icon" aria-hidden="true" />
+          </a>
+        </nav>
       </div>
 
       {/* Page Content */}
@@ -140,15 +200,37 @@ export default function CoursesPage() {
                 </div>
                 <button
                   className="delete-btn"
-                  onClick={() => deleteCourse(course.id)}
+                  onClick={() => requestDeleteCourse(course.id)}
                 >
                   Remove
                 </button>
               </div>
-            ))
-          )}
+))
+        )}
         </div>
+
       </div>
+
+      {/* Confirmation Modal */}
+      {confirmDelete && (
+        <div className="delete-modal-overlay" onClick={cancelDelete}>
+          <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="delete-modal-icon">⚠️</div>
+            <h3 className="delete-modal-title">Delete {confirmDelete.name}?</h3>
+            <p className="delete-modal-message">
+              This will also delete all assessments associated with this course.
+            </p>
+            <div className="delete-modal-actions">
+              <button className="delete-modal-cancel" onClick={cancelDelete}>
+                Cancel
+              </button>
+              <button className="delete-modal-confirm" onClick={confirmDeleteCourse}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

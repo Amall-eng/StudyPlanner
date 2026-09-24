@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StudyPlanar
 
-## Getting Started
+StudyPlanar is a web application for students to organize their courses, keep track of assessments and deadlines and view their progress
 
-First, run the development server:
+I built this project to practice React, Next.js and TypeScript and learn how to build a complete web application
+
+## Features
+
+- Add and remove courses
+- Set a difficulty level for each course
+- Add assignments,quizzes,midterms,final exams and projects
+- Add deadlines for assessments
+- Mark assessments as completed or not completed
+- View upcoming deadlines
+- View progress on the dashboard
+- View assessment deadlines on a monthly calendar
+- Save data using localStorage
+- Works on desktop,tablet and mobile
+
+## Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- CSS
+- Lucide React
+- localStorage
+- Git and GitHub
+
+## Pages
+
+### Courses
+
+The Courses page allows users to add their courses and choose a difficulty level for each one
+
+Deleting a course also removes the assessments connected to that course
+
+### Assessments
+
+The Assessments page allows users to choose a course and add an assessment with its type and deadline
+
+Assessments can also be marked as completed or not completed
+
+### Dashboard
+
+The Dashboard shows the user's study progress, upcoming deadlines and a monthly calendar
+
+Assessments automatically appear on the calendar based on their deadline
+
+## Data Storage
+
+The project currently uses `localStorage` to save courses and assessments
+
+The data stays saved when the page is refreshed or the browser is closed and opened again on the same browser
+
+The project does not currently use a backend or database
+
+## Run Locally
+
+Clone the repository
+
+```bash
+git clone https://github.com/Amall-eng/StudyPlanner.git
+```
+
+Go to the project folder
+
+```bash
+cd studyplanar
+```
+
+Install the dependencies
+
+```bash
+npm install
+```
+
+Run the project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## What I Learned
 
-## Learn More
+While working on StudyPlanar I learned more about
 
-To learn more about Next.js, take a look at the following resources:
+- React components
+- JSX
+- TypeScript
+- useState
+- useEffect
+- localStorage
+- Connecting data using IDs
+- Working with dates and deadlines
+- Responsive design
+- Git and GitHub
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+In the future I may add
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- User accounts
+- A database
+- Notifications and reminders
+- Data sync between devices
+- Study schedule generation
